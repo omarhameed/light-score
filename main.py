@@ -29,7 +29,6 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-
 # Endpoint to get an item by ID, with an optional query parameter (q)
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
