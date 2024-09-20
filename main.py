@@ -27,14 +27,7 @@ app.add_middleware(
 # Default root endpoint, returns a simple JSON response
 @app.get("/")
 def read_root():
-    return {
-        "country": country,
-        "city": city,
-        "postal_code": postal_code,
-        "street_number": street_number,
-        "floor": floor,
-        "light_score": light_score,
-    }
+    return {"Hello": "World"}
 
 
 # Endpoint to get an item by ID, with an optional query parameter (q)
