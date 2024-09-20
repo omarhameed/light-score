@@ -8,6 +8,9 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",  # Add other origins as needed
 ]
+import requests
+
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -26,6 +29,17 @@ def read_root():
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
+def geocode_address(address):
+    api_key = 'YOUR_API_KEY'
+    base_url = "https://maps.googleapis.com/maps/api/geocode/json"
+    endpoint = f"{base_url}?address={address}&key={api_key}"
+    response = requests.get(endpoint)
+    if response.status_code == 200:
+        results = response.json()['results']
+        if results:
+            location = results[0]['geometry']['location']
+            return location['lat'], location['lng']
+    return None, None
 
 @app.get("/light_score/")
 def get_light_score(
@@ -43,5 +57,6 @@ def get_light_score(
         "postal_code": postal_code,
         "street_number": street_number,
         "floor": floor,
-        "light_score": light_score
+        "light_score": light_score,
+     
     }
